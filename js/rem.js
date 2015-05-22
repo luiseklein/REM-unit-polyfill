@@ -185,7 +185,11 @@
                 isFakeBody = !doc.body,
                 div = doc.createElement('div'),
                 currentSize = body.style.fontSize,
-                size;
+                rootSize = parseFloat(docElement.style.fontSize);
+
+            if (rootSize) { // if font-size off root element is set explicitly, use it. Extra calculations are not needed.
+                return rootSize;
+            }
 
             if ( isFakeBody ) {
                 docElement.appendChild( body );
@@ -196,7 +200,7 @@
             body.style.fontSize = '1em';
 
             body.appendChild( div );
-            size = div.offsetWidth;
+            var size = div.offsetWidth;
 
             if ( isFakeBody ) {
                 docElement.removeChild( body );
